@@ -20,5 +20,4 @@ jobs:
         run: sudo apt-get install -y make
         
       - name: Run Makefile
-        run: make -C .github/workflows/Makefile
-
+        run: make -C hospital-management
