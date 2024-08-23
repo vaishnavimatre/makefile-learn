@@ -99,7 +99,7 @@
 				<configuration>
 					<images>
 						<image>
-							<name>dayanyog.org/${project.artifactId}:latest</name>
+						  <name>vaish864//${project.artifactId}:latest</name>
 							<build>
 								<dockerFile>${project.basedir}/dockerfile</dockerFile>
 								<args>
