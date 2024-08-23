@@ -15,13 +15,7 @@ clone:
 			echo "$$service already exists."; \
 		fi \
 	done
-	@if test ! -d $(LIB_PROJECT); then \
-		git clone https://github.com/vaishnavimatre/makefile-learn.git $(LIB_PROJECT); \
-		mv makefile-learn/hospital-management/$(LIB_PROJECT) .; \
-		rm -rf makefile-learn; \
-	else \
-		echo "$(LIB_PROJECT) already exists."; \
-	fi
+	
 
 git_status:
 	@echo "Getting git status for all projects..."
