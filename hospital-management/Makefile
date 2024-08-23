@@ -2,7 +2,7 @@ SERVICES = directory-service case-service patient-service appointment-service
 LIB_PROJECT = javafx-library
 DOCKER_REPO = vaish864
 
-all: clone git_status git_pull git_stash build_lib build_services build_images 
+all: clone git_status git_pull git_stash build_lib build_services build_images  push_images
 
 clone:
 	@echo "Cloning all services and JavaFX project..."
@@ -79,4 +79,10 @@ build_images:
 		else \
 			echo "Directory $$service does not exist."; \
 		fi \
+	done
+
+push_images: 
+	@echo "Pushing all Docker images..."
+	@for service in $(SERVICES); do \
+		docker push $(DOCKER_REPO)/$$service:latest; \
 	done
