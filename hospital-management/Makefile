@@ -8,13 +8,17 @@ clone:
 	@echo "Cloning all services and JavaFX project..."
 	@for service in $(SERVICES); do \
 		if test ! -d $$service; then \
-			git clone https://github.com/vaishnavimatre/makefile-learn.git hospital-management/$$service; \
+			git clone https://github.com/vaishnavimatre/makefile-learn.git $$service; \
+			mv makefile-learn/hospital-management/$$service .; \
+			rm -rf makefile-learn; \
 		else \
 			echo "$$service already exists."; \
 		fi \
 	done
 	@if test ! -d $(LIB_PROJECT); then \
-		git clone https://github.com/vaishnavimatre/makefile-learn.git hospital-management/$(LIB_PROJECT); \
+		git clone https://github.com/vaishnavimatre/makefile-learn.git $(LIB_PROJECT); \
+		mv makefile-learn/hospital-management/$(LIB_PROJECT) .; \
+		rm -rf makefile-learn; \
 	else \
 		echo "$(LIB_PROJECT) already exists."; \
 	fi
