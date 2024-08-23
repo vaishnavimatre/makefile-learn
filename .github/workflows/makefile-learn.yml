@@ -41,5 +41,4 @@ jobs:
         run: make -C hospital-management
 
 
-      - name: Push Docker images
-        run: make push_images
+      
