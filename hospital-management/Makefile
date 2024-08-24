@@ -1,5 +1,5 @@
 
-SERVICES = directory-service case-service patient-service appointment-service
+SERVICES = directory-service case-service patient-service appointment-service api-gateway
 LIB_PROJECT = javafx-library
 DOCKER_REPO = vaish864
 
