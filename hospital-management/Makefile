@@ -1,4 +1,6 @@
-SERVICES = directory-service case-service patient-service appointment-service api-gateway
+
+SERVICES = directory-service case-service patient-service appointment-service
+LIB_PROJECT = javafx-library
 DOCKER_REPO = vaish864
 
 all: clone git_status git_pull git_stash build_lib build_services build_images  push_images
@@ -12,10 +14,15 @@ clone:
 			echo "$$service already exists."; \
 		fi \
 	done
+	@if test ! -d $(LIB_PROJECT); then \
+		git clone https://github.com/vaishnavimatre/makefile-learn.git temp_repo; \
+	else \
+		echo "$(LIB_PROJECT) already exists."; \
+	fi
 
 git_status:
 	@echo "Getting git status for all projects..."
-	@for project in $(SERVICES) ; do \
+	@for project in $(SERVICES) $(LIB_PROJECT); do \
 		if test -d $$project; then \
 			(cd $$project && git status); \
 		else \
@@ -25,7 +32,7 @@ git_status:
 
 git_pull:
 	@echo "Pulling latest changes for all projects..."
-	@for project in $(SERVICES) ; do \
+	@for project in $(SERVICES) $(LIB_PROJECT); do \
 		if test -d $$project; then \
 			(cd $$project && git pull); \
 		else \
@@ -35,7 +42,7 @@ git_pull:
 
 git_stash:
 	@echo "Stashing changes in all projects..."
-	@for project in $(SERVICES); do \
+	@for project in $(SERVICES) $(LIB_PROJECT); do \
 		if test -d $$project; then \
 			(cd $$project && git stash); \
 		else \
@@ -43,6 +50,13 @@ git_stash:
 		fi \
 	done
 
+build_lib:
+	@echo "Building JavaFX library..."
+	@if test -d $(LIB_PROJECT); then \
+		(cd $(LIB_PROJECT) && mvn clean install); \
+	else \
+		echo "$(LIB_PROJECT) does not exist."; \
+	fi
 
 build_services:
 	@echo "Building all services..."
@@ -69,6 +83,3 @@ push_images:
 	@for service in $(SERVICES); do \
 		docker push $(DOCKER_REPO)/$$service:latest; \
 	done
-
-
-
