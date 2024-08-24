@@ -9,8 +9,6 @@ clone:
 	@for service in $(SERVICES); do \
 		if test ! -d $$service; then \
 			git clone https://github.com/vaishnavimatre/makefile-learn.git temp_repo; \
-			mv temp_repo/hospital-management/$$service .; \
-			rm -rf temp_repo; \
 		else \
 			echo "$$service already exists."; \
 		fi \
