@@ -8,11 +8,11 @@ all: clone git_status git_pull git_stash build_lib build_services build_images  
 clone:
 	@echo "Cloning all services and JavaFX project..."
 	@for service in $(SERVICES); do \
-			git clone https://github.com/vaishnavimatre/makefile-learn.git temp_repo; \
+			git clone https://github.com/vaishnavimatre/makefile-learn.git tempp_repo; \
 	done
 
 	@for service in  $(LIB_PROJECT); do \
-		git clone https://github.com/vaishnavimatre/makefile-learn.git temp_repo; \
+		git clone https://github.com/vaishnavimatre/makefile-learn.git tempp_repo; \
 	
 
 git_status:
