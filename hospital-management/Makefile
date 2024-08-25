@@ -13,6 +13,7 @@ clone:
 			echo "$$service already exists."; \
 		fi \
 	done
+
 	@if test ! -d $(LIB_PROJECT); then \
 		git clone https://github.com/vaishnavimatre/makefile-learn.git temp_repo; \
 	else \
