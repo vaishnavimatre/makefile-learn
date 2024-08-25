@@ -22,41 +22,25 @@ clone:
 git_status:
 	@echo "Getting git status for all projects..."
 	@for project in $(SERVICES) $(LIB_PROJECT); do \
-		if test -d $$project; then \
 			(cd $$project && git status); \
-		else \
-			echo "Directory $$project does not exist."; \
-		fi \
 	done
 
 git_pull:
 	@echo "Pulling latest changes for all projects..."
 	@for project in $(SERVICES) $(LIB_PROJECT); do \
-		if test -d $$project; then \
 			(cd $$project && git pull); \
-		else \
-			echo "Directory $$project does not exist."; \
-		fi \
 	done
 
 git_stash:
 	@echo "Stashing changes in all projects..."
 	@for project in $(SERVICES) $(LIB_PROJECT); do \
-		if test -d $$project; then \
-			(cd $$project && git stash); \
-		else \
-			echo "Directory $$project does not exist."; \
-		fi \
+			(cd $$project && git stash); 
 	done
 
 build_lib:
 	@echo "Building JavaFX library..."
-	@if test -d $(LIB_PROJECT); then \
-		(cd $(LIB_PROJECT) && mvn clean install); \
-	else \
-		echo "$(LIB_PROJECT) does not exist."; \
-	fi
-
+		cd $(LIB_PROJECT) && mvn clean install; 
+	
 build_services:
 	@echo "Building all services..."
 	@for service in $(SERVICES); do \
