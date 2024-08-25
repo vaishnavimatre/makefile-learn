@@ -1,4 +1,3 @@
-
 SERVICES = directory-service case-service patient-service appointment-service api-gateway
 LIB_PROJECT = javafx-library
 DOCKER_REPO = vaish864
@@ -8,48 +7,74 @@ all: clone git_status git_pull git_stash build_lib build_services build_images  
 clone:
 	@echo "Cloning all services and JavaFX project..."
 	@for service in $(SERVICES); do \
-			git clone https://github.com/vaishnavimatre/makefile-learn.git ; \
+		if test ! -d $$service; then \
+			git clone https://github.com/vaishnavimatre/makefile-learn.git temp_repo; \
+		else \
+			echo "$$service already exists."; \
+		fi \
 	done
-
-	@for service in  $(LIB_PROJECT); do \
-		git clone https://github.com/vaishnavimatre/makefile-learn.git ; \
-	
+	@if test ! -d $(LIB_PROJECT); then \
+		git clone https://github.com/vaishnavimatre/makefile-learn.git temp_repo; \
+	else \
+		echo "$(LIB_PROJECT) already exists."; \
+	fi
 
 git_status:
 	@echo "Getting git status for all projects..."
 	@for project in $(SERVICES) $(LIB_PROJECT); do \
-			cd $$project && git status; \
+		if test -d $$project; then \
+			(cd $$project && git status); \
+		else \
+			echo "Directory $$project does not exist."; \
+		fi \
 	done
 
 git_pull:
 	@echo "Pulling latest changes for all projects..."
 	@for project in $(SERVICES) $(LIB_PROJECT); do \
-			cd $$project && git pull; \
+		if test -d $$project; then \
+			(cd $$project && git pull); \
+		else \
+			echo "Directory $$project does not exist."; \
+		fi \
 	done
 
 git_stash:
 	@echo "Stashing changes in all projects..."
 	@for project in $(SERVICES) $(LIB_PROJECT); do \
-			cd $$project && git stash; \
+		if test -d $$project; then \
+			(cd $$project && git stash); \
+		else \
+			echo "Directory $$project does not exist."; \
+		fi \
 	done
 
 build_lib:
 	@echo "Building JavaFX library..."
-		cd $(LIB_PROJECT) && mvn clean install; \
-
+	@if test -d $(LIB_PROJECT); then \
+		(cd $(LIB_PROJECT) && mvn clean install); \
+	else \
+		echo "$(LIB_PROJECT) does not exist."; \
+	fi
 
 build_services:
 	@echo "Building all services..."
 	@for service in $(SERVICES); do \
-			cd $$service && mvn clean package; \
+		if test -d $$service; then \
+			(cd $$service && mvn clean package); \
+		else \
+			echo "Directory $$service does not exist."; \
+		fi \
 	done
 
 build_images:
 	@echo "Building Docker images for all services..."
 	@for service in $(SERVICES); do \
-		
+		if test -d $$service; then \
 			docker build -t $(DOCKER_REPO)/$$service:latest $$service; \
-		
+		else \
+			echo "Directory $$service does not exist."; \
+		fi \
 	done
 
 push_images: 
