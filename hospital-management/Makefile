@@ -60,25 +60,17 @@ build_lib:
 build_services:
 	@echo "Building all services..."
 	@for service in $(SERVICES); do \
-		if test -d $$service; then \
 			(cd $$service && mvn clean package); \
-		else \
-			echo "Directory $$service does not exist."; \
-		fi \
 	done
 
 build_images:
 	@echo "Building Docker images for all services..."
 	@for service in $(SERVICES); do \
-		if test -d $$service; then \
 			docker build -t $(DOCKER_REPO)/$$service:latest $$service; \
-		else \
-			echo "Directory $$service does not exist."; \
-		fi \
 	done
 
 push_images: 
-	@echo "Pushing all Docker images..."
+	@echo "Pushing all Docker images"
 	@for service in $(SERVICES); do \
 		docker push $(DOCKER_REPO)/$$service:latest; \
 	done
